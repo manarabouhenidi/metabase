@@ -11,7 +11,7 @@ import Database from "metabase/entities/databases";
 
 import Card from "metabase/components/Card";
 import EmptyState from "metabase/components/EmptyState";
-import EntityItem from "metabase/components/EntityItem";
+import SearchResult from "metabase/search/components/SearchResult";
 import Subhead from "metabase/components/type/Subhead";
 import { FILTERS } from "metabase/collections/components/ItemTypeFilterBar";
 
@@ -180,22 +180,7 @@ const SearchResultSection = ({ title, items }) => (
           break;
       }
 
-      return (
-        <Link
-          to={item.getUrl()}
-          key={item.id}
-          data-metabase-event={`Search Results;Item Click;${item.model}`}
-        >
-          <EntityItem
-            variant="list"
-            name={item.getName()}
-            iconName={item.getIcon()}
-            iconColor={item.getColor()}
-            item={item}
-            extraInfo={extraInfo}
-          />
-        </Link>
-      );
+      return <SearchResult result={item} />;
     })}
   </Card>
 );

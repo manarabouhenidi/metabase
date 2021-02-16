@@ -62,6 +62,8 @@ export default function SearchResult({ result }) {
       return <DashboardResult dashboard={result} />;
     case "collection":
       return <CollectionResult collection={result} />;
+    case "table":
+      return <TableResult table={result}/>;
     default:
       return <div>{result.name}</div>;
   }
@@ -108,14 +110,25 @@ function CollectionResult({ collection }) {
       <Flex align="center">
         <ItemIcon item={collection} />
         <Title>{collection.name}</Title>
+        <pre>{collection.score}</pre>
       </Flex>
     </ResultLink>
   );
 }
 
+function formattedContext(context) {
+  return context.map(function({ is_match, text }) {
+            if (is_match) {
+              return <strong> {text}</strong>
+            } else {
+              return <span> {text}</span>
+            }
+  });
+}
+
 function QuestionResult({ question }) {
   return (
-    <ResultLink to={Urls.question(question.id)}>
+    <ResultLink to={question.getUrl()}>
       <Flex align="center">
         <ItemIcon item={question} />
         <Box>
@@ -132,16 +145,17 @@ function QuestionResult({ question }) {
       </Flex>
       {question.context && (
         <Box ml="42px" mt="12px">
-          <strong>{question.context.match}:</strong> {question.context.content}
+          {formattedContext(question.context)}
         </Box>
       )}
+      <pre>{question.score}</pre>
     </ResultLink>
   );
 }
 
 function DashboardResult({ dashboard }) {
   return (
-    <ResultLink>
+    <ResultLink to={dashboard.getUrl()}>
       <Flex align="center">
         <ItemIcon item={dashboard} />
         <Box>
@@ -151,10 +165,22 @@ function DashboardResult({ dashboard }) {
       </Flex>
       {dashboard.context && (
         <Box ml="42px" mt="12px">
-          <strong>{dashboard.context.match}:</strong>{" "}
-          {dashboard.context.content}
+          {formattedContext(dashboard.context)}
         </Box>
       )}
+      <pre>{dashboard.score}</pre>
+    </ResultLink>
+  );
+}
+
+function TableResult({ table }) {
+  return (
+    <ResultLink to={table.getUrl()}>
+      <Flex align="center">
+        <ItemIcon item={table} />
+        <Title>{table.name}</Title>
+        <pre>{table.score}</pre>
+      </Flex>
     </ResultLink>
   );
 }
