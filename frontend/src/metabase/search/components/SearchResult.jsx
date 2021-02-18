@@ -63,7 +63,7 @@ export default function SearchResult({ result }) {
     case "collection":
       return <CollectionResult collection={result} />;
     case "table":
-      return <TableResult table={result}/>;
+      return <TableResult table={result} />;
     default:
       return <div>{result.name}</div>;
   }
@@ -117,11 +117,11 @@ function CollectionResult({ collection }) {
 
 function formattedContext(context) {
   return context.map(function({ is_match, text }) {
-            if (is_match) {
-              return <strong> {text}</strong>
-            } else {
-              return <span> {text}</span>
-            }
+    if (is_match) {
+      return <strong> {text}</strong>;
+    } else {
+      return <span> {text}</span>;
+    }
   });
 }
 

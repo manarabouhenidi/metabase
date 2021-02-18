@@ -7,7 +7,6 @@ import Link from "metabase/components/Link";
 import { Box, Flex } from "grid-styled";
 
 import Search from "metabase/entities/search";
-import Database from "metabase/entities/databases";
 
 import Card from "metabase/components/Card";
 import EmptyState from "metabase/components/EmptyState";
@@ -46,6 +45,7 @@ export default class SearchApp extends React.Component {
                 );
               }
 
+              //TODO: this is breaking the ordering; redo this in a follow-up PR
               const resultsByType = _.chain(list)
                 .groupBy("model")
                 .value();
@@ -147,39 +147,6 @@ export default class SearchApp extends React.Component {
 const SearchResultSection = ({ title, items }) => (
   <Card>
     {items.map(item => {
-      let extraInfo;
-      switch (item.model) {
-        case "table":
-        case "segment":
-        case "metric":
-          extraInfo = (
-            <Flex align="center" color={color("text-medium")}>
-              <Icon name="database" size={8} mr="4px" />
-              <span className="text-small text-bold" style={{ lineHeight: 1 }}>
-                <Database.Name id={item.database_id} />
-              </span>
-            </Flex>
-          );
-          break;
-        case "collection":
-          break;
-        default:
-          extraInfo = (
-            <div className="inline-block">
-              <Flex align="center" color={color("text-medium")}>
-                <Icon name="folder" size={10} mr="4px" />
-                <span
-                  className="text-small text-bold"
-                  style={{ lineHeight: 1 }}
-                >
-                  {item.collection_name || t`Our Analytics`}
-                </span>
-              </Flex>
-            </div>
-          );
-          break;
-      }
-
       return <SearchResult result={item} />;
     })}
   </Card>
