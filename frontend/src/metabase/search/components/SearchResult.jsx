@@ -110,7 +110,6 @@ function CollectionResult({ collection }) {
       <Flex align="center">
         <ItemIcon item={collection} />
         <Title>{collection.name}</Title>
-        <pre>{collection.score}</pre>
       </Flex>
     </ResultLink>
   );
@@ -148,7 +147,6 @@ function QuestionResult({ question }) {
           {formattedContext(question.context)}
         </Box>
       )}
-      <pre>{question.score}</pre>
     </ResultLink>
   );
 }
@@ -168,7 +166,6 @@ function DashboardResult({ dashboard }) {
           {formattedContext(dashboard.context)}
         </Box>
       )}
-      <pre>{dashboard.score}</pre>
     </ResultLink>
   );
 }
@@ -179,7 +176,6 @@ function TableResult({ table }) {
       <Flex align="center">
         <ItemIcon item={table} />
         <Title>{table.name}</Title>
-        <pre>{table.score}</pre>
       </Flex>
     </ResultLink>
   );
